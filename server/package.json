@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.5",
+    "cors": "^2.8.5",
+    "dayjs": "^1.10.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.11",
+    "nodejieba": "^2.5.2",
+    "puppeteer": "^9.1.1",
+    "require-all": "^3.0.0"
+  },
+  "scripts": {
+    "serve": "nodemon index.js"
+  }
+}
