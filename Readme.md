@@ -34,12 +34,14 @@ server文件夹下 npm run serve
 
 6.未完待续
 
-#### 2.2截图展示![微信截图_20210727124019](D:\zxyspider\screenshot\微信截图_20210727124019.png)
+#### 2.2截图展示
 
-![微信截图_20210727124153](D:\zxyspider\screenshot\微信截图_20210727124153.png)
+![image](screenshot/微信截图_20210727124019.png)
 
-![微信截图_20210727124248](D:\zxyspider\screenshot\微信截图_20210727124248.png)
+![image](screenshot/微信截图_20210727124153.png)
 
-![微信截图_20210727124254](D:\zxyspider\screenshot\微信截图_20210727124254.png)
+![image](screenshot/微信截图_20210727124248.png)
 
-![微信截图_20210727124303](D:\zxyspider\screenshot\微信截图_20210727124303.png)
+![image](screenshot/微信截图_20210727124254.png)
+
+![image](screenshot/微信截图_20210727124303.png)
