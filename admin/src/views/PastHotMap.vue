@@ -6,89 +6,93 @@
 
 
 <script>
+import * as dayjs from "dayjs";
+
 export default {
+  props: {
+    name: String,
+  },
   data() {
     return {
-      currentHotData: [],
+      pastHotMapData: [],
+      dateList: [],
+      dateX: [],
+      valueList: [],
       arr: [],
     };
   },
   methods: {
-    async getCurrentHotData() {
-      const res = await this.$http.get("getCurrentHotData");
+    async getPastHotMapData() {
+      const res = await this.$http.post(
+        "getPastHotMapData",
+        this.$route.params
+      );
       for (let item of res.data) {
         if (!item.count) {
           item.count = "可能为微博广告";
+          return this.$message({
+            message: "此热搜为微博广告，无法查询热度，请返回",
+            type: "warning",
+          });
         }
         if (item.count == 0) {
           item.count = "微博置顶热搜";
+          return this.$message({
+            message: "此热搜为微博手动置顶热搜，无法查询热度，请返回",
+            type: "warning",
+          });
         }
+        item.created_at = dayjs(item.created_at).format();
       }
-      this.currentHotData = res.data;
-      // this.currentHotData.map((el) => {
-      //   let newarr = [];
-      //   for (let item in el) {
-      //     newarr.push(el[item]);
-      //   }
-      //   this.arr.push(newarr)
-      //   return 0;
-      // });
-      console.log(this.currentHotData);
+
+      this.pastHotMapData = res.data;
+      this.pastHotMapData.map((el) => {
+        this.dateList.push(el.created_at);
+        this.valueList.push(el.count);
+        this.dateX.push(dayjs(el.created_at).format("YY年M月D日 H时"));
+        return;
+      });
       this.drawChart();
     },
     drawChart() {
       let myEchart = this.$echarts.init(document.getElementById("main"));
       let option = {
-        title:{
-           text: '实时微博热搜',
-           x:'center',
-           y: 'top', 
-        },
-        tooltip:{},
-        dataZoom: [
-        {
-            id: 'dataZoomX',
-            type: 'slider',
-            xAxisIndex: [0],
-            filterMode: 'empty',
-            start: 0,
-            end: 25
-        },
-        {
-            id: 'dataZoomY',
-            type: 'slider',
-            yAxisIndex: [0],
-            filterMode: 'empty'
-        }
-    ],
-        dataset: [
+        // Make gradient line here
+        visualMap: [
           {
-            dimensions: ["count", "name", "rank", "url"],
-            source: this.currentHotData,
-          },
-          {
-            transform: {
-              type: "sort",
-              config: { dimension: "count", order: "desc" },
-            },
+            show: false,
+            type: "continuous",
+            dimension: 0,
+            min: 0,
+            max: this.dateList.length - 1,
           },
         ],
+        title: {
+          top: "0%",
+          left: "center",
+          text: this.pastHotMapData[0].name,
+        },
+        tooltip: {
+          trigger: "axis",
+        },
         xAxis: {
-          type: "category",
-          axisLabel: { interval: 0, rotate: 30 },
+          data: this.dateX,
         },
         yAxis: {},
+        grid: {
+          top: "15%",
+        },
         series: {
-          type: "bar",
-          encode: { x: "name", y: "count" },
-          datasetIndex: 1,
+          type: "line",
+          showSymbol: false,
+          data: this.valueList,
         },
       };
       option && myEchart.setOption(option);
     },
   },
   mounted() {
-    this.getCurrentHotData();
+    this.getPastHotMapData();
   },
 };
 </script>

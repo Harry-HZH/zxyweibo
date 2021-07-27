@@ -7,6 +7,7 @@
         :data="pastHotArticleEnd"
         style="width: 100%"
         :empty-text="emptyText"
+        @sort-change="sortChange"
       >
         <el-table-column prop="nickname" label="发布者" width="300">
         </el-table-column>
@@ -62,6 +63,7 @@ export default {
   },
   data() {
     return {
+      pastHotArticleClone:[],
       pastHotArticle: [],
       pastHotArticleEnd: [],
       wordCloudArr: [],
@@ -85,6 +87,7 @@ export default {
           return;
         }
         this.pastHotArticle = res.data.model;
+        this.pastHotArticleClone = JSON.parse(JSON.stringify(this.pastHotArticle))
         this.total = this.pastHotArticle.length;
         if (this.total > this.pageSize) {
           for (let index = 0; index < this.pageSize; index++) {
@@ -210,6 +213,17 @@ export default {
     back() {
       this.isShow = !this.isShow;
       this.$nextTick();
+    },
+    sortChange(column) {
+      this.currentPage = 1; // 排序后返回第一页
+      if (column.order === "descending") {
+        this.pastHotArticle.sort((a, b) => b[column.prop] - a[column.prop]);
+      } else if (column.order === "ascending") {
+        this.pastHotArticle.sort((a, b) => a[column.prop] - b[column.prop]);
+      } else if (column.order === null){
+        this.pastHotArticle = this.pastHotArticleClone
+      }
+      this.handleCurrentChange(this.currentPage);
     },
   },
   created() {

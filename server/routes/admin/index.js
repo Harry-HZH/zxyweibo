@@ -1,3 +1,5 @@
+const { find } = require('../../models/HotSearch');
+
 module.exports = app => {
   const express = require('express')
   const path = require('path');
@@ -38,10 +40,16 @@ module.exports = app => {
     res.send(testLogin)
   })
 
+
+  router.post('/getPastHotMapData', async (req, res) => {
+    const model = await HotSearch.find({name:req.body.name}).select('name count created_at')
+    res.send(model)
+
+  })
   router.post('/getPastHotArticle', async (req, res) => {
     const url = req.body.url
     console.log(url);
-    if(url === 'javascript:void(0);'){
+    if (url === 'javascript:void(0);') {
       res.send('此为微博广告，无法爬取')
       return
     }
@@ -84,7 +92,7 @@ module.exports = app => {
   router.get('/getPastHotSearch', async (req, res) => {
     const body = req.query
     const reg = new RegExp(body.content, 'i')
-    body.date[1] = dayjs(body.date[1]).add(1,'day').format()
+    body.date[1] = dayjs(body.date[1]).add(1, 'day').format()
     const query = HotSearch.find({
       $and: [
         { created_at: { $gte: body.date[0] || 0, $lt: body.date[1] || Date.now() } },

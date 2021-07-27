@@ -43,7 +43,12 @@
         }
       })"
  type="text" size="small">相关文章分析</el-button>
-        <el-button type="text" size="small">热度变化图表</el-button>
+        <el-button type="text" size="small" @click="$router.push({
+        name: 'pasthotmap',
+        params: {
+          name:`${scope.row.name}`
+        }
+      })">热度变化图表</el-button>
       </template>
     </el-table-column>
     </el-table>

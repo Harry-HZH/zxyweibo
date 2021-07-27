@@ -11,20 +11,13 @@ module.exports = (url) => {
                 timeout: 120000,
                 waitUntil: 'load',
             });
+        await page.waitForSelector('#pl_feedlist_index > div:nth-child(1) > div:nth-child(2) > div.card > div.card-act > ul > li:nth-child(3) > a')
         let btn = await page.$('#pl_feedlist_index > div:nth-child(1) > div:nth-child(2) > div.card > div.card-act > ul > li:nth-child(3) > a')
         await btn.click()
         if (await page.$('#weibo_top_public > div > div > div.gn_position > div.gn_login > ul > li:nth-child(3) > a')) {
             page = await require('./login')(page)
         }
         await console.log('开始爬取');
-        // let news = []
-        // let newsinfo = await page.$$eval('.card-feed .content .info .name', el => {
-        //     let arr = []
-        //     for (let key in el) {
-        //         arr.push(el[key].innerHTML)
-        //     }
-        //     return arr
-        // })
         let content = await page.$$eval('.m-wrap .m-con-l .card-wrap .card .card-feed .txt', el => {
             let arr = []
             for (let key in el) {
@@ -188,7 +181,6 @@ module.exports = (url) => {
         }
         await console.log(lastarr);
         await browser.close();
-        // mongoose.connection.close()
         return lastarr
     })(pageURL)
     return data

@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.5",
     "echarts": "^5.1.1",
     "echarts-wordcloud": "^2.0.0",
     "element-ui": "^2.4.5",

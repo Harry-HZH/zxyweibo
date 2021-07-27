@@ -20,7 +20,7 @@ const routes = [
       { path: '/hotsearch/current', component: CurrentHot },
       { path: '/hotsearch/currentmap', component: CurrentHotMap },
       { path: '/hotsearch/past', component: PastHot },
-      { path: '/hotsearch/pastmap', component: PastHotMap },
+      { path: '/hotsearch/pastmap/', component: PastHotMap, props:true, name:'pasthotmap' },
       { path: '/hotsearch/pasthotarticle/:url', component: PastHotArticle, props: true, name: 'pasthotarticle' },
 
     ]

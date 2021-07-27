@@ -24,7 +24,6 @@
           >
           
             <el-menu-item index="/hotsearch/past">热搜列表</el-menu-item>
-            <el-menu-item index="/hotsearch/pastmap">热搜榜图表</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>

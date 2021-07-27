@@ -1,7 +1,7 @@
 module.exports = async (newpage) => {
     let page = newpage
     await console.log('ok');
-
+    await page.waitForSelector('div.item.username.input_wrap > input')
     await page.evaluate(async () => {
         const username = document.querySelector('div.item.username.input_wrap > input');
         username.value = '18918102262'
